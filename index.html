@@ -32,13 +32,19 @@
  <div class="marquee">
  <span>
  あなたは
- <font color="red"><i><b>■■■</font></i></b>
+ <font color="red"><i><b><span id="counter">--</span></font></i></b>
  番目の訪問です。キリ番の人は掲示板にカキコして下さい！素通り禁止！！
+ <script>
+        fetch('/api/index.php')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('counter').innerText = data.count;
+            });
+    </script>
  </span>
  <br>
  </div>
 
-<h1><?php echo 'タイトルです'; ?></h1>
  <hr>
   <br>
   <a href="https://www.youtube.com/@n_nc310"><img src="image/icon.jpg"width="100px"></a><br>
