@@ -1,0 +1,125 @@
+/**HTMLのデフォルトでpadding:5;になるので、**/
+/**paddingを0に指定しないと画面いっぱいにレイアウトできなくなります。**/
+html,body{
+  padding:0;
+  margin:0;
+}
+
+/* ヘッダーのスタイル */
+header {
+    text-align: left;
+    background-color: #c4c4c4;
+    padding: 2px;
+    /* flexの初期値により、必要な分だけ高さを取る */
+}
+/* メインコンテンツのスタイル */
+main {
+    flex: 1;                /* 残りのスペースをすべて占有 */
+    padding: 2rem;
+    /* ここが伸縮してフッターを下に押し下げる */
+}
+
+/* フッターのスタイル */
+footer {
+    position: fixed;  /* 画面に対して固定 */
+    bottom: 30px;        /* 画面下部から0pxの位置 */
+    width: 70%;
+    text-align: center;
+    /* flexの初期値により、必要な分だけ高さを取る */
+}
+
+/**scrollのバーが邪魔になって画面がズレるので**/
+/**widthとheightは100vh、100vwで画面いっぱいにしておきます。**/
+.base{
+  display:flex;
+  flex-direction:row;
+  width:100vw;
+  height:100vh;
+  overflow:hidden;
+}
+/**iframeを表示する領域。**/
+.hidari{
+ width:15%;
+ height:100%;
+
+}
+/**iframe内のページの広さをiframeの幅に合わせる。**/
+/**これがないと縦だけでなく横方面にもスクロールバーが出てみっともないです。**/
+.menu{
+	width:100%;
+}
+/**右のメインになる画面です。**/
+.migi{
+ width:85%;
+ height:100%;
+ overflow-y:scroll;
+}
+
+
+.mannaka {
+  width: 45%;
+  margin: 0 auto;  /* 上下マージン0、左右マージンauto */
+  display: table;  /* テーブルはデフォルトでblock要素 */
+  border-collapse: collapse;
+}
+.mannaka td{
+    text-align: center; /* 水平中央寄せ */
+    vertical-align: middle; /* 垂直中央寄せ */
+}
+
+
+/**見出し**/
+
+
+/**文字スクロール**/
+.marquee {
+text-align: center;
+color: #ffffff;
+background-color: #3ba0ff; /* 背景色 */
+overflow: hidden;
+}
+
+.marquee > span {
+display: inline-block;
+white-space: nowrap;
+padding-left: 100%;
+animation-name: MarqueeScroll;
+animation-timing-function: linear;
+animation-duration: 20s; /* 1周するのにかかる時間 */
+animation-iteration-count: infinite; /* 繰り返す回数 */
+}
+
+@keyframes MarqueeScroll {
+from { transform: translateX(0);}
+to { transform: translateX(-100%);}
+}
+
+
+/**メールコピー**/
+.tooltip {
+    position: relative;
+    cursor: pointer;
+}
+
+.tooltip-text {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -0.8em;
+    display: inline-block;
+    padding: 4px 0.6em;
+    white-space: nowrap;
+    font-size: 0.8em;
+    line-height: 1.5em;
+    background: #333;
+    color: #fff;
+    border-radius: 8px;
+    transition: 0.2s ease-in;
+}
+
+.tooltip:hover .tooltip-text {
+    opacity: 1;
+    visibility: visible;
+}
