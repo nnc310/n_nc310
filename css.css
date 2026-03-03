@@ -1,9 +1,15 @@
+html{
+    font-size: 0.9rem;
+}
+
 /**HTMLのデフォルトでpadding:5;になるので、**/
 /**paddingを0に指定しないと画面いっぱいにレイアウトできなくなります。**/
 html,body{
   padding:0;
   margin:0;
+  overflow-x: hidden;
 }
+
 
 /* ヘッダーのスタイル */
 header {
@@ -17,10 +23,14 @@ main {
     flex: 1;                /* 残りのスペースをすべて占有 */
     padding: 2rem;
     /* ここが伸縮してフッターを下に押し下げる */
+    width: 50%;
+    text-align: center;
+    margin: 0 auto;
 }
 
 /* フッターのスタイル */
 footer {
+    font-size: 90%;
     position: fixed;  /* 画面に対して固定 */
     bottom: 30px;        /* 画面下部から0pxの位置 */
     width: 100%;
@@ -57,6 +67,7 @@ footer {
 
 
 .mannaka {
+    margin: 0 auto;
   width: 45%;
   margin: 0 auto;  /* 上下マージン0、左右マージンauto */
   display: table;  /* テーブルはデフォルトでblock要素 */
@@ -65,6 +76,10 @@ footer {
 .mannaka td{
     text-align: center; /* 水平中央寄せ */
     vertical-align: middle; /* 垂直中央寄せ */
+}
+
+.blueT{
+    color: #3258ff;
 }
 
 
@@ -93,6 +108,13 @@ animation-iteration-count: infinite; /* 繰り返す回数 */
 from { transform: translateX(0);}
 to { transform: translateX(-100%);}
 }
+
+/**画像下テキスト**/
+	.box2{
+		width:120px;
+		margin:0;
+		text-align:center;
+	}
 
 
 /**メールコピー**/
