@@ -32,15 +32,9 @@
  <div class="marquee">
  <span>
  あなたは
- <font color="red"><i><b><span id="counter">--</span></font></i></b>
+ <font color="red"><i><b>  </font></i></b>
  番目の訪問です。キリ番の人は掲示板にカキコして下さい！素通り禁止！！
- <script>
-        fetch('/api/index.php')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('counter').innerText = data.count;
-            });
-    </script>
+
  </span>
  <br>
  </div>
