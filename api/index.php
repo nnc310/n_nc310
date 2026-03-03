@@ -1,39 +1,54 @@
 <?php
+  //カウント数が記録してあるファイルを読み書きできるモードで開く
+  $fp = fopen('count.dat', 'r+b');
 
-// カウント数が記録されているファイルのパス
-$file_path = 'count.dat';
+  //カウント数の書き込みが重複しないようにファイルを排他ロックする
+  flock($fp, LOCK_EX);
 
-// クッキーの名前
-$cookie_name = 'page_viewed';
-// クッキーの有効期限（秒）
-$cookie_duration = 3600; // = 1時間
+  //ファイルからカウント数を取得する
+  $count = fgets($fp);
 
+  //カウント数を1増やす
+  $count++;
 
-// ファイルを排他ロックで開く
-$fp = fopen('count.dat', 'r+b');
+  //カウント数の分割
+  $count_ary = str_split($count);
 
-// ファイルのロックに成功した場合のみ処理を続行
-if ($fp !== false) {
-    // ロックを取得
-    if (flock($fp, LOCK_EX)) {
-        // ファイルからカウント数を取得
-        $count = (int)fgets($fp);
+?>
 
-        // クッキーが設定されていない場合のみカウントを増やす
-        if (!isset($_COOKIE[$cookie_name])) {
-            // カウントをインクリメント
-            $count++;
-            // ファイルのポインタを先頭に戻してカウント数を書き込む
-            rewind($fp);
-            fwrite($fp, (string)$count);
-            // クッキーを設定
-            setcookie($cookie_name, '1', time() + $cookie_duration);
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <h1>アクセスカウンタ</h1>
+  <div class="counter-area">
+    <!-- ファイルから取得したカウント数を表示する -->
+    <ul class="access-count">
+      <?php
+        //ループ処理によりアクセス数の数字を1つずつli要素に入れていく
+        for($i = 0; $i < count($count_ary); $i++) {
+          echo '<li>' . $count_ary[$i]  . '</li>';
         }
-        // ロックを解放
-        flock($fp, LOCK_UN);
-    }
-    // ファイルを閉じる
-    fclose($fp);
-}
+      ?>
+    </ul><!-- /.count -->
+  </div><!-- /.counter-area -->
+</body>
+</html>
 
+<?php
+  //ポインターをファイルの先頭に戻す
+  rewind($fp);
+
+  //最新のアクセス数をファイルに書き込む
+  fwrite($fp, $count);
+
+  //ファイルのロックを解除する
+  flock($fp, LOCK_UN);
+
+  //ファイルを閉じる
+  fclose($fp);
 ?>
