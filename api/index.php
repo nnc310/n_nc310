@@ -41,3 +41,5 @@ if ($fp !== false) {
 }
 
 ?>
+
+<p>あなたは<?php echo $count; ?>人目の来訪者です。</p>
