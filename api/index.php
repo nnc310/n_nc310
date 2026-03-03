@@ -1,41 +1,43 @@
 <?php
-  //カウント数が記録してあるファイルを読み書きできるモードで開く
-  $fp = fopen('count.dat', 'r+b');
 
-  //ファイルを排他ロックする
-  flock($fp, LOCK_EX);
+// カウント数が記録されているファイルのパス
+$file_path = 'count.dat';
 
-  //ファイルからカウント数を取得する
-  $count = fgets($fp);
+// クッキーの名前
+$cookie_name = 'page_viewed';
+// クッキーの有効期限（秒）
+$cookie_duration = 3600; // = 1時間
 
-  //カウント数を1増やす
-  $count++;
-?>
+// カウントを保存するファイルが存在しない場合は作成
+if (!file_exists($file_path)) {
+    file_put_contents($file_path, '0');
+}
 
-<!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>アクセスカウンター</title>
-  </head>
-  <body>
-      <div class="counter-area">
-        <!-- ファイルから取得したカウント数を表示する -->
-        <span class="access-count">あなたは<?php echo $count;?>番目の訪問者です。</span>
-      </div><!-- /.counter-area -->
-  </body>
-</html>
+// ファイルを排他ロックで開く
+$fp = fopen($file_path, 'r+b');
 
-<?php
-  //ポインターをファイルの先頭に戻す
-  rewind($fp);
+// ファイルのロックに成功した場合のみ処理を続行
+if ($fp !== false) {
+    // ロックを取得
+    if (flock($fp, LOCK_EX)) {
+        // ファイルからカウント数を取得
+        $count = (int)fgets($fp);
 
-  //最新のアクセス数をファイルに書き込む
-  fwrite($fp, $count);
+        // クッキーが設定されていない場合のみカウントを増やす
+        if (!isset($_COOKIE[$cookie_name])) {
+            // カウントをインクリメント
+            $count++;
+            // ファイルのポインタを先頭に戻してカウント数を書き込む
+            rewind($fp);
+            fwrite($fp, (string)$count);
+            // クッキーを設定
+            setcookie($cookie_name, '1', time() + $cookie_duration);
+        }
+        // ロックを解放
+        flock($fp, LOCK_UN);
+    }
+    // ファイルを閉じる
+    fclose($fp);
+}
 
-  //ファイルのロックを解除する
-  flock($fp, LOCK_UN);
-
-  //ファイルを閉じる
-  fclose($fp);
 ?>
