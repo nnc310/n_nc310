@@ -8,7 +8,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     // カウントを1増やす
     const count = await redis.incr('visitor_count');
-    res.status(200).json({ count });
+    res.status(200).json({ count: count });
   } catch (error) {
     res.status(500).json({ error: "Redis接続エラー" });
   }

@@ -35,14 +35,17 @@
  <font color="red"><i><b> <span id="count-number">...</span> </font></i></b>
  番目の訪問です。キリ番の人は掲示板にカキコして下さい！素通り禁止！！
 <script>
-        // ページが開かれたら、さっき作ったAPIから数字をもらってくる
-        fetch('/api/counter')
-            .then(response => response.json())
-            .then(data => {
-                // HTMLの<span>の中に数字を入れる
-                document.getElementById('count-number').innerText = data.count;
-            })
-            .catch(error => console.error('エラー:', error));
+fetch('/api/counter')
+    .then(res => res.json())
+    .then(data => {
+        console.log(data); // ← 【確認用】F12キーのコンソールで中身が見れます
+        // data.count が undefined だと「undefined番目」になります
+        if (data.count !== undefined) {
+            document.getElementById('count').innerText = data.count;
+        } else {
+            document.getElementById('count').innerText = "エラー";
+        }
+    });
     </script>
  </span>
  <br>
