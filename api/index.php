@@ -8,13 +8,9 @@ $cookie_name = 'page_viewed';
 // クッキーの有効期限（秒）
 $cookie_duration = 3600; // = 1時間
 
-// カウントを保存するファイルが存在しない場合は作成
-if (!file_exists($file_path)) {
-    file_put_contents($file_path, '0');
-}
 
 // ファイルを排他ロックで開く
-$fp = fopen($file_path, 'r+b');
+$fp = fopen('count.dat', 'r+b');
 
 // ファイルのロックに成功した場合のみ処理を続行
 if ($fp !== false) {
