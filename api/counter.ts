@@ -1,15 +1,18 @@
 import { Redis } from '@upstash/redis';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-// SDKの初期化（環境変数から自動で読み込みます）
-const redis = Redis.fromEnv();
+// 直接貼り付ける（' ' で囲むのを忘れずに）
+const redis = new Redis({
+  url: 'https://sincere-swine-63353.upstash.io',
+  token: 'Afd5AAIncDJmMThlMzBiNzQzOTE0NmVlOTRmZWRmZGNiMTJmMTBlZXAyNjMzNTM',
+});
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
-    // カウントを1増やす
     const count = await redis.incr('visitor_count');
-    res.status(200).json({ count: count });
+    res.status(200).json({ count });
   } catch (error) {
-    res.status(500).json({ error: "Redis接続エラー" });
+    console.error(error);
+    res.status(500).json({ error: "接続エラー" });
   }
 }
