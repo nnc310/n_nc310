@@ -23,7 +23,7 @@ main {
     flex: 1;                /* 残りのスペースをすべて占有 */
     padding: 2rem;
     /* ここが伸縮してフッターを下に押し下げる */
-    width: 50%;
+    width: 60%;
     text-align: center;
     margin: 0 auto;
 }

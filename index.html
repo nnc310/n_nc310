@@ -34,16 +34,16 @@
  あなたは
  <font color="red"><i><b> <span id="count-display">...</span> </font></i></b>
  番目の訪問です。キリ番の人は掲示板にカキコして下さい！素通り禁止！！
+
 <script>
   fetch('/api/counter')
     .then(res => res.json())
     .then(data => {
-      // APIから届いた data.count を、id="count-display" の場所に入れる
-      // data.count の "count" は、APIが返している {"count": 6} の名前に合わせます
       document.getElementById('count-display').innerText = data.count;
     })
     .catch(err => console.error("表示エラー:", err));
 </script>
+
  </span>
  <br>
  </div>
